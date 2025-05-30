@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Haritha's Portfolio</title>
+    <style>
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+            color: #eee;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        header p {
+            margin: 0.2rem;
+            font-size: 1rem;
+            color: #ffcc70;
+        }
+
+        section {
+            max-width: 1000px;
+            margin: 6rem auto 2rem;
+            padding: 0 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease-in-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: #ffcc70;
+            border-bottom: 2px solid #444;
+            padding-bottom: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        ul {
+            padding-left: 1.2rem;
+        }
+
+        a {
+            color: #7ecfff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .experience-wrapper,
+        .projects-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: space-between;
+        }
+
+        .experience-card,
+        .project-card {
+            background: rgba(255, 255, 255, 0.08);
+            flex: 1 1 45%;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: 0.3s ease;
+        }
+
+        .experience-card:hover,
+        .project-card:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 75, 31, 0.2);
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #ff4b1f;
+        }
+
+        .project-description {
+            margin: 0.5rem 0;
+            font-size: 0.95rem;
+        }
+
+        .project-tech {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #ccc;
+        }
+
+        .get-in-touch {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .get-in-touch h3 {
+            margin-bottom: 1rem;
+            color: #ffcc70;
+        }
+
+        .get-in-touch form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .get-in-touch input,
+        .get-in-touch textarea {
+            padding: 0.6rem;
+            border-radius: 6px;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .get-in-touch button {
+            background: #ff4b1f;
+            color: white;
+            padding: 0.6rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .get-in-touch button:hover {
+            background: #ff6e40;
+        }
+
+        footer {
+            text-align: center;
+            margin: 3rem 0;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        #scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 0.5rem 1rem;
+            background: #ff4b1f;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+            z-index: 1001;
+        }
+
+        canvas#starCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            background: #0a0a40;
+        }
+
+        .contact-icons {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            font-size: 1.5rem;
+            justify-content: center;
+        }
+
+        .contact-icons a {
+            color: #ffcc70;
+            transition: color 0.3s;
+        }
+
+        .contact-icons a:hover {
+            color: #ff4b1f;
+        }
+
+        .skills-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+            justify-content: center;
+        }
+
+        .skill-card {
+            background: rgba(255, 255, 255, 0.08);
+            flex: 0 1 120px;
+            padding: 1rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: #eee;
+            transition: 0.3s ease;
+            cursor: default;
+        }
+
+        .skill-card:hover {
+            background-color: rgba(255, 75, 31, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .skill-card i {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            color: #ffcc70;
+        }
+
+        .skill-card span {
+            display: block;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="starCanvas"></canvas>
+
+    <header>
+        <h1>Haritha Chinthakunta</h1>
+        <p>UI/UX Developer</p>
+    </header>
+
+    <section id="summary">
+        <h2>Professional Summary</h2>
+        <div
+            style="background: rgba(255,255,255,0.08); padding: 1.2rem; border-radius: 10px; line-height: 1.6; font-size: 1.05rem;">
+            Passionate UI/UX Developer with over 10+ years of experience building responsive and user-friendly web
+            applications using React, AngularJS, JavaScript, and modern web technologies. Skilled in creating scalable
+            UI/UX components, enhancing user engagement through animations and real-time features, and continuously
+            learning to improve.
+        </div>
+    </section>
+
+    <section id="education">
+        <h2>Education</h2>
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="background: rgba(255,255,255,0.08); padding: 1rem; border-radius: 10px;">
+                <h3 style="margin: 0;">MA in IT Management</h3>
+                <p><strong>Webster University, MO</strong> — 2014–2016</p>
+                <p>GPA: 3.8</p>
+            </div>
+            <div style="background: rgba(255,255,255,0.08); padding: 1rem; border-radius: 10px;">
+                <h3 style="margin: 0;">B.Tech in Computer Science</h3>
+                <p><strong>Satavahana University, India</strong> — 2008–2012</p>
+                <p>GPA: 9.1</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-wrapper">
+            <!-- Skill Cards Here (same as before) -->
+            <div class="skill-card" title="JavaScript"><i class="fab fa-js"></i><span>JavaScript</span></div>
+            <div class="skill-card" title="React"><i class="fab fa-react"></i><span>React</span></div>
+            <div class="skill-card" title="Node.js"><i class="fab fa-node-js"></i><span>Node.js</span></div>
+            <div class="skill-card" title="Next.js"><i class="fas fa-code-branch"></i><span>Next.js</span></div>
+            <div class="skill-card" title="Angular"><i class="fab fa-angular"></i><span>Angular</span></div>
+            <div class="skill-card" title="Redux"><i class="fas fa-sync-alt"></i><span>Redux</span></div>
+            <div class="skill-card" title="TypeScript"><i class="fab fa-js-square"></i><span>TypeScript</span></div>
+            <div class="skill-card" title="Graphic Design"><i class="fas fa-paint-brush"></i><span>Graphic</span></div>
+            <div class="skill-card" title="AWS"><i class="fab fa-aws"></i><span>AWS</span></div>
+            <div class="skill-card" title="GraphQL"><i class="fas fa-project-diagram"></i><span>GraphQL</span></div>
+            <div class="skill-card" title="HTML5"><i class="fab fa-html5"></i><span>HTML5</span></div>
+            <div class="skill-card" title="CSS3"><i class="fab fa-css3-alt"></i><span>CSS3</span></div>
+            <div class="skill-card" title="AEM"><i class="fas fa-file-code"></i><span>AEM</span></div>
+            <div class="skill-card" title="Tailwind CSS"><i class="fas fa-wind"></i><span>Tailwind CSS</span></div>
+            <div class="skill-card" title="UI/UX Design"><i class="fas fa-pencil-ruler"></i><span>UI/UX Design</span>
+            </div>
+            <div class="skill-card" title="Figma"><i class="fab fa-figma"></i><span>Figma</span></div>
+            <div class="skill-card" title="Storybook"><i class="fas fa-book"></i><span>Storybook</span></div>
+            <div class="skill-card" title="MUI"><i class="fas fa-layer-group"></i><span>MUI</span></div>
+            <div class="skill-card" title="Git"><i class="fab fa-git-alt"></i><span>Git</span></div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2>Experience</h2>
+        <div class="experience-wrapper">
+            <!-- Experience Cards Here (same as before) -->
+            <div class="experience-card">
+                <div class="project-title">Florida Blue</div>
+                <div class="project-description">Developed Single Page Applications (SPAs) using React.js, Redux, and
+                    Context API, handling complex state
+                    management and asynchronous data fetching.</div>
+                <div class="project-tech">React, Redux, GraphQL, AWS, UI/UX Design, Tailwind CSS</div>
+            </div>
+            <div class="experience-card">
+                <div class="project-title">Toyota Financial</div>
+                <div class="project-description">Utilized TypeScript and NgRx for state management, built responsive
+                    SPAs with Angular,
+                    integrated WebSockets for real-time communication, containerized with Docker and Kubernetes.</div>
+                <div class="project-tech">Angular, UX Design, TypeScript, Azure DevOps</div>
+            </div>
+            <div class="experience-card">
+                <div class="project-title">Lowe’s</div>
+                <div class="project-description">Built responsive web apps using React, TypeScript, Tailwind CSS;
+                    applied Redux for state management and React Router for SPA navigation.</div>
+                <div class="project-tech">React, Tailwind CSS</div>
+            </div>
+            <div class="experience-card">
+                <div class="project-title">State Street</div>
+                <div class="project-description">Developed dynamic SPAs using AngularJS, enhanced UI with Bootstrap and
+                    jQuery,
+                    integrated CI/CD pipelines with Jenkins, and optimized SEO and performance.</div>
+                <div class="project-tech">AngularJS, Jenkins</div>
+            </div>
+            <div class="experience-card">
+                <div class="project-title">Mouri Tech</div>
+                <div class="project-description">Designed responsive web interfaces with HTML5, CSS3, JavaScript;
+                    leveraged React features like portals and hooks; implemented real-time updates with WebSockets.
+                </div>
+                <div class="project-tech">React, JavaScript, Bootstrap</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-wrapper">
+            <div class="project-card">
+                <div class="project-title">E-commerce Website</div>
+                <div class="project-description">Full-stack e-commerce platform using Node.js, React.js, and SQL.
+                    Implemented shopping cart and backend APIs.</div>
+                <div class="project-tech">React.js, Node.js, SQL, UX Design, HTML5, CSS3</div>
+            </div>
+            <div class="project-card">
+                <div class="project-title">Real-Time Chat Application</div>
+                <div class="project-description">Created using React.js, Node.js, and Socket.io with message persistence
+                    and user authentication.</div>
+                <div class="project-tech">React.js, Node.js, Socket.io</div>
+            </div>
+            <div class="project-card">
+                <div class="project-title">AI Document Management</div>
+                <div class="project-description">Document system using Nest.js, AWS EC2, Azure Logic Apps with GraphQL
+                    and integrated payments.</div>
+                <div class="project-tech">NestJS, AWS, GraphQl</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <div style="background: rgba(255,255,255,0.08); padding: 1rem; border-radius: 10px; text-align: center;">
+            <p><strong>Email:</strong> harithachinthakunta1@gmail.com</p>
+            <p><strong>LinkedIn:</strong> linkedin.com/in/haritha-c-6a1676247</p>
+            <p><strong>Phone:</strong> 3144749336</p>
+            <div class="contact-icons">
+                <a href="mailto:harithachinthakunta1@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://linkedin.com/in/haritha-c-6a1676247" target="_blank"><i
+                        class="fab fa-linkedin"></i></a>
+                <a href="tel:+13144749336"><i class="fas fa-phone"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <section class="get-in-touch">
+        <h3>Get in Touch</h3>
+        <form>
+            <input type="text" placeholder="Your Name" required />
+            <input type="email" placeholder="Your Email" required />
+            <input type="tel" placeholder="Your Phone Number" required />
+            <textarea rows="5" placeholder="Your Message" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>&copy; 2025 Haritha C. All rights reserved.</footer>
+
+    <button id="scrollTopBtn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' });">↑ Top</button>
+
+    <script>
+        const canvas = document.getElementById('starCanvas');
+        const ctx = canvas.getContext('2d');
+        let stars = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function createStars() {
+            stars = [];
+            const numStars = 150;
+            for (let i = 0; i < numStars; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    radius: Math.random() * 1.5,
+                    dx: (Math.random() - 0.5) * 0.5,
+                    dy: (Math.random() - 0.5) * 0.5
+                });
+            }
+        }
+
+        function animateStars() {
+            ctx.fillStyle = '#0a0a40';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'white';
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fill();
+                star.x += star.dx;
+                star.y += star.dy;
+                if (star.x < 0 || star.x > canvas.width) star.dx *= -1;
+                if (star.y < 0 || star.y > canvas.height) star.dy *= -1;
+            });
+            requestAnimationFrame(animateStars);
+        }
+
+        createStars();
+        animateStars();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        const scrollBtn = document.getElementById('scrollTopBtn');
+        window.addEventListener('scroll', () => {
+            scrollBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+        });
+    </script>
+</body>
+
+</html>
